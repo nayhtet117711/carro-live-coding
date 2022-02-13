@@ -73,7 +73,6 @@ const PageCheckout: FC<InterfaceCheckoutProps> = ({
     )
 
     const onSubmit = (values: TypeCheckoutFormValues) => {
-    
         toast.promise(
             post({
                 requestId: "12344556",
