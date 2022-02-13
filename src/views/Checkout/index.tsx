@@ -1,5 +1,5 @@
 import React, { FC, useEffect, useMemo } from "react"
-import { useSelector } from "react-redux"
+import { useSelector, useDispatch } from "react-redux"
 import toast from "react-hot-toast"
 import { useLocation } from "wouter"
 
@@ -71,6 +71,8 @@ const PageCheckout: FC<InterfaceCheckoutProps> = ({
             ),
         [CartItems]
     )
+    
+    const dispatch = useDispatch()
 
     const onSubmit = async (values: TypeCheckoutFormValues) => {
         await post({
@@ -93,30 +95,9 @@ const PageCheckout: FC<InterfaceCheckoutProps> = ({
         else if(error) return toast.error(error)
         else {
             toast.success("Success...")
-
+            dispatch({ type: "UPDATE_CART", value: [] })
         }
-        // toast.promise(
-        //     post({
-        //         requestId: "12344556",
-        //         paymentInfo: {
-        //             cardInfo: {
-        //                 cardNo: `${values.card_number}`,
-        //                 cardCVV: `${values.cvv}`,
-        //                 cardExpiryDate: `${values.card_expire}`,
-        //             },
-        //             email: `${values.email}`,
-        //         },
-        //         products: CartItems.map((product) => ({
-        //             id: `${product.id}`,
-        //             quantity: product.qty,
-        //         })),
-        //     }),
-        //     {
-        //         loading: "Paying...",
-        //         success: "Success",
-        //         error: "Something went wrong",
-        //     }
-        // )
+    
     }
 
     // Redirect on empty cart
