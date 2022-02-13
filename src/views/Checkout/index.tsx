@@ -55,7 +55,7 @@ const PageCheckout: FC<InterfaceCheckoutProps> = ({
     const [, setLocation] = useLocation()
 
     const {
-        state: { loading },
+        state: { loading, error, data },
         post,
     } = postPayment()
 
@@ -72,29 +72,51 @@ const PageCheckout: FC<InterfaceCheckoutProps> = ({
         [CartItems]
     )
 
-    const onSubmit = (values: TypeCheckoutFormValues) => {
-        toast.promise(
-            post({
-                requestId: "12344556",
-                paymentInfo: {
-                    cardInfo: {
-                        cardNo: `${values.card_number}`,
-                        cardCVV: `${values.cvv}`,
-                        cardExpiryDate: `${values.card_expire}`,
-                    },
-                    email: `${values.email}`,
+    const onSubmit = async (values: TypeCheckoutFormValues) => {
+        await post({
+            requestId: "12344556",
+            paymentInfo: {
+                cardInfo: {
+                    cardNo: `${values.card_number}`,
+                    cardCVV: `${values.cvv}`,
+                    cardExpiryDate: `${values.card_expire}`,
                 },
-                products: CartItems.map((product) => ({
-                    id: `${product.id}`,
-                    quantity: product.qty,
-                })),
-            }),
-            {
-                loading: "Paying...",
-                success: "Success",
-                error: "Something went wrong",
-            }
-        )
+                email: `${values.email}`,
+            },
+            products: CartItems.map((product) => ({
+                id: `${product.id}`,
+                // id: product.id,
+                quantity: product.qty,
+            })),
+        })
+        if(loading) return toast.loading("Loading...")
+        else if(error) return toast.error(error)
+        else {
+            toast.success("Success...")
+
+        }
+        // toast.promise(
+        //     post({
+        //         requestId: "12344556",
+        //         paymentInfo: {
+        //             cardInfo: {
+        //                 cardNo: `${values.card_number}`,
+        //                 cardCVV: `${values.cvv}`,
+        //                 cardExpiryDate: `${values.card_expire}`,
+        //             },
+        //             email: `${values.email}`,
+        //         },
+        //         products: CartItems.map((product) => ({
+        //             id: `${product.id}`,
+        //             quantity: product.qty,
+        //         })),
+        //     }),
+        //     {
+        //         loading: "Paying...",
+        //         success: "Success",
+        //         error: "Something went wrong",
+        //     }
+        // )
     }
 
     // Redirect on empty cart
