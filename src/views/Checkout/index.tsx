@@ -94,8 +94,9 @@ const PageCheckout: FC<InterfaceCheckoutProps> = ({
         if(loading) return toast.loading("Loading...")
         else if(error) return toast.error(error)
         else {
-            toast.success("Success...")
-            dispatch({ type: "UPDATE_CART", value: [] })
+            toast.success("Payment success!")
+            setLocation("/")
+            return dispatch({ type: "UPDATE_CART", value: [] })
         }
     
     }
