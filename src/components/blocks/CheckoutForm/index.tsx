@@ -189,8 +189,8 @@ const CheckoutForm: FC<CheckoutFormProps> = ({
                             <FieldLabel error={!!getErrors("card_number")}>
                                 Card information
                                 <span>
-                                    <IconMaster />
-                                    <IconVisa />
+                                    <IconMaster data-selected={!getErrors("card_number") && parseCardType(models.card_number)==="mastercard"} />
+                                    <IconVisa data-selected={!getErrors("card_number") && parseCardType(models.card_number)==="visa"} />
                                 </span>
                             </FieldLabel>
 

@@ -69,7 +69,12 @@ export const FieldLabel = styled.span`
         top: 3.16em;
         right: 10px;
         gap: 2px;
-        opacity: 0.6;
+        svg[data-selected=true] {
+            opacity: 1
+        }
+        svg[data-selected=false] {
+            opacity: 0.3
+        }
     }
 
     ${({ error = false }: FieldLabelProps) => {
